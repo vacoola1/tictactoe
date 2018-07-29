@@ -1,0 +1,8 @@
+spring:
+    application:
+        name: tic-tac-toe
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://192.168.99.100:32768/tictactoe
+        username: root
+        password: password
