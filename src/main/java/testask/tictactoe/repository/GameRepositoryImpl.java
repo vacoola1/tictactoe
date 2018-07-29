@@ -1,6 +1,7 @@
 package testask.tictactoe.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -42,9 +43,9 @@ public class GameRepositoryImpl extends AsyncRepository implements GameRepositor
 
     @Override
     public Mono<Game> create(Game game) {
-        var params = Map.of(
-                "name", game.getName(),
-                "status", game.getStatus());
+        var params = new MapSqlParameterSource()
+                .addValue("name", game.getName())
+                .addValue("status", game.getStatus());
 
         return supplyAsync(() -> {
             Number newId = insertGame.executeAndReturnKey(params);
@@ -56,10 +57,10 @@ public class GameRepositoryImpl extends AsyncRepository implements GameRepositor
     @Override
     public Mono<Game> update(Game game) {
         var query = "UPDATE GAME SET ID=:id, NAME=:name, STATUS=:status WHERE ID=:id";
-        var params = Map.of(
-                "id", game.getId(),
-                "name", game.getName(),
-                "status", game.getStatus().name());
+        var params = new MapSqlParameterSource()
+                .addValue("id", game.getId())
+                .addValue("name", game.getName())
+                .addValue("status", game.getStatus());
 
         return supplyAsync(() -> jdbcTemplate.update(query, params))
                 .map(id -> game);
