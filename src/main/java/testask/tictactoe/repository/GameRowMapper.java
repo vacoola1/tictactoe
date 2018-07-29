@@ -25,7 +25,7 @@ public class GameRowMapper implements RowMapper<Game> {
         return new Game(
                 rs.getInt("ID"),
                 rs.getString("NAME"),
-                objectMapper.readValue(rs.getString("STATUS"), GameStatus.class));
+                GameStatus.valueOf(rs.getString("STATUS")));
     }
 
 }

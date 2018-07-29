@@ -6,3 +6,8 @@ spring:
         url: jdbc:mysql://192.168.99.100:32768/tictactoe
         username: root
         password: password
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
