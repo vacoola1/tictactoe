@@ -38,8 +38,11 @@ export default class Game extends PureComponent {
             <div className="card-body">
                 <section className="card-text"> <Board game={this.state.game} statuses={this.statuses} onChangeGame={this.onChangeGame.bind(this)}/></section>
             </div>
+
+        console.log('--- this.state.status : ', this.state.status)
+
         return (
-            <div className={this.state.status == this.statuses.IN_PROGRESS.key ? 'card border-primary mb-3' : 'card mb-3'}>
+            <div className={(this.state.status === this.statuses.IN_PROGRESS.label) ? 'card border-primary mb-3':'card mb-3'}>
                 <div className="card-header">
                     <h2>
                         <span>{this.state.name}</span> - <span>{this.state.status}</span>
