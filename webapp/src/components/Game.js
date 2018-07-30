@@ -1,5 +1,5 @@
-import React, {Component, PureComponent} from 'react'
-import Board from "../Board";
+import React, { PureComponent } from 'react'
+import Board from "./Board";
 
 export default class Game extends PureComponent {
 
@@ -9,11 +9,11 @@ export default class Game extends PureComponent {
             label: "In progress"
         },
         WON_X: {
-            key: "WIN_X",
+            key: "WON_X",
             label: "X won"
         },
         WON_O: {
-            key: "WIN_O",
+            key: "WON_O",
             label: "O won"
         },
         DRAW: {
@@ -28,10 +28,6 @@ export default class Game extends PureComponent {
         status: this.statuses.IN_PROGRESS.label
     }
 
-    // componentWillUpdate(nextProps) {
-    //     this.updateGame(nextProps.game)
-    // }
-
     componentDidMount() {
         this.updateGame(this.props.game)
     }
@@ -43,7 +39,7 @@ export default class Game extends PureComponent {
                 <section className="card-text"> <Board game={this.state.game} statuses={this.statuses} onChangeGame={this.onChangeGame.bind(this)}/></section>
             </div>
         return (
-            <div className='card border-primary mb-3'>
+            <div className={this.state.status == this.statuses.IN_PROGRESS.key ? 'card border-primary mb-3' : 'card mb-3'}>
                 <div className="card-header">
                     <h2>
                         <span>{this.state.name}</span> - <span>{this.state.status}</span>

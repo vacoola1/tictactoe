@@ -1,5 +1,5 @@
-import React, {PureComponent} from 'react'
-import api from "../../api";
+import React, { PureComponent } from 'react'
+import api from "../api";
 
 export default class NewGameForm extends PureComponent {
 

@@ -48,7 +48,7 @@ export default class Board extends PureComponent {
 
     loadMoves(game) {
         const {statuses} = this.props
-        let gameEnded = game.status === statuses.IN_PROGRESS
+        let gameEnded = game.status !== statuses.IN_PROGRESS.key
         let totalMoves = 0;
         let board = Array(9).fill('')
 
@@ -64,7 +64,6 @@ export default class Board extends PureComponent {
                 board: board,
                 totalMoves: totalMoves
             })
-
         });
     }
 

@@ -1,9 +1,7 @@
 import React, {PureComponent} from 'react'
-import Game from '../Game/'
+import Game from '../Game'
 import NewGameForm from '../NewGameForm'
 import api from "../../api";
-
-import './style.css'
 
 export default class GameList extends PureComponent {
 
@@ -17,16 +15,12 @@ export default class GameList extends PureComponent {
     }
 
     render() {
-        console.log('--- render state- - ', this.state.games)
-
         const gameElements = this.state.games.map((game) => (
-            <li key={game.id} className="game-list__li">
-                <Game game={game}
-                       isOpen={this.state.openGameId === game.id}
+            <li key={game.id} style={{"listStyle": "none"}}>
+                <Game game={game} isOpen={this.state.openGameId === game.id}
                        onButtonClick={this.handleClickButton.bind(this, game.id)}/>
             </li>
         ))
-
         return (
             <div className="row">
                 <div className="cell col-sm">
