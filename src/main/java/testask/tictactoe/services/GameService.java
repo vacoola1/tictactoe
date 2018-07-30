@@ -11,6 +11,7 @@ import java.util.List;
 public interface GameService {
     Mono<List<Game>> findAll();
     Mono<Game> find(Integer id);
+    Mono<Game> findInProgress(Integer id);
     Mono<Game> create(Game game);
     Mono<Game> update(Game game);
     Mono<Game> updateStatus(Integer gameId, GameStatus status);

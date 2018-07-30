@@ -13,19 +13,11 @@ export default class GameList extends PureComponent {
     }
 
     componentDidMount() {
-        api.loadGames().then(games => {
-            console.log('=== res', games);
-            this.setState({
-                games: games
-            });
-        })
+        this.updateGames();
     }
 
     render() {
         console.log('--- render state- - ', this.state.games)
-
-        // const createButton = <button className="btn btn-primary btn-lg" onClick={this.onCreateButtonClick}>
-        //     New game</button>
 
         const gameElements = this.state.games.map((game) => (
             <li key={game.id} className="game-list__li">
@@ -39,7 +31,7 @@ export default class GameList extends PureComponent {
             <div className="row">
                 <div className="cell col-sm">
                     <div>
-                        <NewGameForm/>
+                        <NewGameForm onCreateClick={this.updateGames.bind(this)}/>
                     </div>
                     <div>
                         <ul style={{paddingLeft:0}}>
@@ -54,6 +46,15 @@ export default class GameList extends PureComponent {
     handleClickButton = (gameId) => {
         this.setState({
             openGameId: this.state.openGameId === gameId ? null : gameId
+        })
+    }
+
+    updateGames = () => {
+        api.loadGames().then(games => {
+            console.log('=== res', games);
+            this.setState({
+                games: games
+            });
         })
     }
 }

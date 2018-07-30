@@ -41,6 +41,11 @@ public class GameController {
         return gameService.find(gameId);
     }
 
+    @PostMapping("/games")
+    public Mono<Game> createGame(@RequestBody Game game) {
+        return gameService.create(game);
+    }
+
     @GetMapping("/games/{gameId}/moves")
     public Mono<List<Move>> getMoves(@PathVariable("gameId") Integer gameId) {
         return moveService.findGameMovesSorted(gameId);

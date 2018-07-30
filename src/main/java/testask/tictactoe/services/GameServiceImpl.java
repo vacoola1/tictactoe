@@ -9,9 +9,14 @@ import testask.tictactoe.repository.GameRepository;
 import testask.tictactoe.repository.MoveRepository;
 
 import java.util.List;
+import java.util.Objects;
+
+import static testask.tictactoe.model.GameStatus.IN_PROGRESS;
 
 @Service
 public class GameServiceImpl implements GameService {
+    private static final String DEFAULT_GAME_NAME = "Tic tac Fight";
+
     private GameRepository gameRepository;
 
     @Autowired
@@ -30,7 +35,25 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public Mono<Game> findInProgress(Integer id) {
+        return gameRepository.find(id)
+                .onErrorMap(ex -> new RuntimeException("game is not found"))
+                .map(game -> {
+                    if (game.getStatus() != IN_PROGRESS) {
+                        throw new RuntimeException("Live game is not found");
+                    }
+                    return game;
+                });
+    }
+
+    @Override
     public Mono<Game> create(Game game) {
+        if (Objects.equals(game.getStatus(), null)) {
+            game.setStatus(IN_PROGRESS);
+        }
+        if (Objects.equals(game.getName(), null)) {
+            game.setName(DEFAULT_GAME_NAME);
+        }
         return gameRepository.create(game);
     }
 

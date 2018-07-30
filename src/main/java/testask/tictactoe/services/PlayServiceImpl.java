@@ -41,21 +41,35 @@ public class PlayServiceImpl implements PlayService {
     @Override
     @SneakyThrows
     public Mono<GameStatus> doNextMove(Integer gameId, Integer cell) {
-        return moveService.findGameMovesSorted(gameId).flatMap(moves -> {
-            if (isCorrectMove(moves, cell)) {
-                throw new RuntimeException("Incorrect move");
-            }
-            return moveService.create(Move.of(gameId, moves.size(), cell)).flatMap(move -> {
-                moves.add(move);
-                GameStatus status = provideNewGameStatus(moves);
-                return gameService.updateStatus(gameId, status);
-            }).map(Game::getStatus);
-        });
+        return gameService.findInProgress(gameId)
+                .zipWith(moveService.findGameMovesSorted(gameId))
+                .flatMap(tuples -> {
+                    var game = tuples.getT1();
+                    var moves = tuples.getT2();
+                    if (!isCorrectMove(moves, cell)) {
+                        throw new RuntimeException("Incorrect move");
+                    }
+                    Move newMove = Move.of(gameId, moves.size() + 1, cell);
+                    return moveService.create(newMove).flatMap(move -> {
+                        moves.add(move);
+                        return updateGameStatus(game, moves);
+                    });
+                });
+    }
+
+    private Mono<GameStatus> updateGameStatus(Game game, List<Move> moves) {
+        var newStatus = provideNewGameStatus(moves);
+        if (newStatus != IN_PROGRESS) {
+            return gameService.updateStatus(game.getId(), newStatus).map(Game::getStatus);
+        }else {
+            return Mono.just(IN_PROGRESS);
+        }
     }
 
     private boolean isCorrectMove(List<Move> moves, Integer cell) {
         return moves.size() < AREA_SIZE
-                && moves.stream().noneMatch(move -> move.getCell() == cell);
+                && cell <= AREA_SIZE
+                && moves.stream().noneMatch(move -> move.getCell().equals(cell));
     }
 
     private GameStatus provideNewGameStatus(List<Move> moves) {

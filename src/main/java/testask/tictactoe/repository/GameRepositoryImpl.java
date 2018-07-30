@@ -60,7 +60,7 @@ public class GameRepositoryImpl extends AsyncRepository implements GameRepositor
         var params = new MapSqlParameterSource()
                 .addValue("id", game.getId())
                 .addValue("name", game.getName())
-                .addValue("status", game.getStatus());
+                .addValue("status", game.getStatus().toString());
 
         return supplyAsync(() -> jdbcTemplate.update(query, params))
                 .map(id -> game);

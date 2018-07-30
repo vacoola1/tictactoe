@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react'
-import Game from '../Game/'
 import api from "../../api";
 
 export default class NewGameForm extends PureComponent {
@@ -11,20 +10,17 @@ export default class NewGameForm extends PureComponent {
 
     handleSubmit(event) {
         event.preventDefault();
-        window.alert('asdad')
-        // const data = new FormData(event.target);
-        //
-        // fetch('/api/form-submit-url', {
-        //     method: 'POST',
-        //     body: data,
-        // });
+        const {onCreateClick} = this.props
 
-        // api.loadGames().then(games => {
-        //     console.log('=== res', games);
-        //     this.setState({
-        //         games: games
-        //     });
-        // })
+        console.log('--- target', event.target)
+        const formData = new FormData(event.target)
+        const newGame = { name: formData.get('newname') };
+        console.log('===!!!! new game', newGame);
+
+        api.createGame(newGame).then((game) => {
+            console.log('=== new game', game);
+            onCreateClick()
+        })
     }
 
     render() {

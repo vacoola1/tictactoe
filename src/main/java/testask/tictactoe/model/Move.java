@@ -11,11 +11,11 @@ public class Move {
     private Integer cell;
 
     public boolean isX() {
-        return this.id % 2 == 0;
+        return this.id % 2 == 1;
     }
 
     public boolean isO() {
-        return this.id % 2 == 1;
+        return this.id % 2 == 0;
     }
 
 }
