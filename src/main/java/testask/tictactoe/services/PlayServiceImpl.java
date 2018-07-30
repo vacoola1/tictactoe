@@ -99,13 +99,13 @@ public class PlayServiceImpl implements PlayService {
 
     private boolean isXLine(List<Integer> line, List<Move> movesForLine) {
         return line.stream().allMatch(lineCell ->
-                movesForLine.stream().allMatch(Move::isX)
+                movesForLine.size() == 3 && movesForLine.stream().allMatch(Move::isX)
         );
     }
 
     private boolean isOLine(List<Integer> line, List<Move> movesForLine) {
         return line.stream().allMatch(lineCell ->
-                movesForLine.stream().allMatch(Move::isO)
+                movesForLine.size() == 3 && movesForLine.stream().allMatch(Move::isO)
         );
     }
 

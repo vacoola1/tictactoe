@@ -9,6 +9,10 @@ function createGame(game) {
     return post(`/api/v1/games`, game);
 }
 
+function loadMoves(game) {
+    return get(`/api/v1/games/${game.id}/moves`);
+}
+
 function doNextMove(game, cell) {
     return post(`/api/v1/games/${game.id}/moves/${cell}`, game);
 }
@@ -32,6 +36,7 @@ function post(url, data = {}) {
 export default {
     loadGames,
     createGame,
-    doNextMove
+    doNextMove,
+    loadMoves
 };
 

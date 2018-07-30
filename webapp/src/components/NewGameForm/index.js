@@ -11,14 +11,9 @@ export default class NewGameForm extends PureComponent {
     handleSubmit(event) {
         event.preventDefault();
         const {onCreateClick} = this.props
-
-        console.log('--- target', event.target)
         const formData = new FormData(event.target)
         const newGame = { name: formData.get('newname') };
-        console.log('===!!!! new game', newGame);
-
         api.createGame(newGame).then((game) => {
-            console.log('=== new game', game);
             onCreateClick()
         })
     }

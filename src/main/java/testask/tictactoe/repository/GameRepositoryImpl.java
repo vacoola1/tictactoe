@@ -29,8 +29,7 @@ public class GameRepositoryImpl extends AsyncRepository implements GameRepositor
 
     @Override
     public Mono<List<Game>> findAll() {
-        var query = "SELECT ID, NAME, STATUS FROM GAME";
-
+        var query = "SELECT ID, NAME, STATUS FROM GAME order by ID DESC";
         return supplyAsync(() -> jdbcTemplate.query(query, gameRowMapper));
     }
 

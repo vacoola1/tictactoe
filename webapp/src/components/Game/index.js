@@ -3,49 +3,71 @@ import Board from "../Board";
 
 export default class Game extends PureComponent {
 
-    constructor() {
-        super();
-        this.statuses = {
-            inProgress: {
-                key: "IN_PROGRESS",
-                label: "In progress"
-            },
-            winX: {
-                key: "WIN_X",
-                label: "X won"
-            },
-            winO: {
-                key: "WIN_O",
-                label: "O won"
-            },
-            draw: {
-                key: "DRAW",
-                label: "Draw"
-            }
+    statuses = {
+        IN_PROGRESS: {
+            key: "IN_PROGRESS",
+            label: "In progress"
+        },
+        WON_X: {
+            key: "WIN_X",
+            label: "X won"
+        },
+        WON_O: {
+            key: "WIN_O",
+            label: "O won"
+        },
+        DRAW: {
+            key: "DRAW",
+            label: "Draw"
         }
     }
 
+    state = {
+        game: null,
+        name: "",
+        status: this.statuses.IN_PROGRESS.label
+    }
+
+    componentWillUpdate(nextProps) {
+        console.log('--- WillUpdate : ', nextProps)
+        this.updateGame(nextProps.game)
+    }
+
+    componentDidMount() {
+        console.log('--- DidMoun : ', this.props)
+        this.updateGame(this.props.game)
+    }
+
     render() {
-        const {game, isOpen, onButtonClick} = this.props
-        const body = isOpen && <section className="card-text">
-            <Board game={game} statuses={this.statuses}/>
-        </section>
+        const {isOpen, onButtonClick} = this.props
+        const body = isOpen &&
+            <div className="card-body">
+                <section className="card-text"> <Board game={this.state.game} statuses={this.statuses} onChangeGame={this.onChangeGame.bind(this)}/></section>
+            </div>
         return (
             <div className='card border-primary mb-3'>
                 <div className="card-header">
                     <h2>
-                        <span>{game.name}</span> - <span>{game.status}</span>
+                        <span>{this.state.name}</span> - <span>{this.state.status}</span>
                         <button className="btn btn-primary btn-lg float-right" onClick={onButtonClick}>
                             {isOpen ? 'Close' : 'Open'}
                         </button>
                     </h2>
                 </div>
-
-                <div className="card-body">
-                    {body}
-                </div>
+                {body}
             </div>
         )
     }
 
+    onChangeGame = (game) => {
+        this.updateGame(game)
+    }
+
+    updateGame(game) {
+        this.setState({
+            game: game,
+            name: game.name,
+            status: this.statuses[game.status].label
+        })
+    }
 }
