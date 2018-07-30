@@ -18,3 +18,10 @@
 ### FE
  * ReactJS
  * Bootstrap 4
+
+
+###### TODO
+ * Exception interceptor
+ * Tests
+ * UI improvement
+ * Refactoring
