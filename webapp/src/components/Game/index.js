@@ -28,13 +28,11 @@ export default class Game extends PureComponent {
         status: this.statuses.IN_PROGRESS.label
     }
 
-    componentWillUpdate(nextProps) {
-        console.log('--- WillUpdate : ', nextProps)
-        this.updateGame(nextProps.game)
-    }
+    // componentWillUpdate(nextProps) {
+    //     this.updateGame(nextProps.game)
+    // }
 
     componentDidMount() {
-        console.log('--- DidMoun : ', this.props)
         this.updateGame(this.props.game)
     }
 
@@ -59,8 +57,10 @@ export default class Game extends PureComponent {
         )
     }
 
-    onChangeGame = (game) => {
-        this.updateGame(game)
+    onChangeGame = (newStatus) => {
+        this.setState({
+            status: this.statuses[newStatus].label
+        })
     }
 
     updateGame(game) {

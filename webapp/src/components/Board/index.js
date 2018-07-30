@@ -34,6 +34,7 @@ export default class Board extends PureComponent {
             }
             if (status !== statuses.IN_PROGRESS.key) {
                 gameEnded = true;
+                this.props.onChangeGame(status)
             }
 
             this.setState({
@@ -52,17 +53,11 @@ export default class Board extends PureComponent {
         let board = Array(9).fill('')
 
         api.loadMoves(game).then((moves) => {
-            let count = 0;
             for (let index in moves) {
                 let move = moves[index]
-                console.log('--- move : ', move)
-                console.log('--- cell : ', move.cell)
                 board[move.cell - 1] = move.id % 2 === 0 ? 'O' : 'X'
                 totalMoves++
-                count++
             }
-
-            console.log('--- count : ', count)
 
             this.setState({
                 gameEnded: gameEnded,
