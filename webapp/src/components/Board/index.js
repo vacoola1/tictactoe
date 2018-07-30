@@ -32,7 +32,7 @@ export default class Board extends PureComponent {
         api.doNextMove(game, cell).then((status) => {
             if (board[cell - 1] === '') {
                 totalMoves++
-                let turn = this.state.totalMoves % 2 === 0 ? 'O' : 'X'
+                let turn = totalMoves % 2 === 0 ? 'O' : 'X'
                 board[cell - 1] = turn
                 box.innerText = turn
             }
