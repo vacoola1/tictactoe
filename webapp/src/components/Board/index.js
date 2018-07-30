@@ -11,10 +11,6 @@ export default class Board extends PureComponent {
         totalMoves: 0
     }
 
-    // componentWillUpdate(nextProps) {
-    //     this.loadMoves(nextProps.game)
-    // }
-
     componentDidMount() {
         this.loadMoves(this.props.game)
     }
@@ -56,24 +52,25 @@ export default class Board extends PureComponent {
         let board = Array(9).fill('')
 
         api.loadMoves(game).then((moves) => {
+            let count = 0;
             for (let index in moves) {
                 let move = moves[index]
                 console.log('--- move : ', move)
                 console.log('--- cell : ', move.cell)
                 board[move.cell - 1] = move.id % 2 === 0 ? 'O' : 'X'
                 totalMoves++
+                count++
             }
 
-            console.log('--- state 1 : ', this.state)
+            console.log('--- count : ', count)
+
             this.setState({
                 gameEnded: gameEnded,
                 board: board,
                 totalMoves: totalMoves
             })
-            console.log('--- state 2 : ', this.state)
 
         });
-
     }
 
     render() {
@@ -88,7 +85,7 @@ export default class Board extends PureComponent {
                     <div className="square" data-square="6">{this.state.board[5]}</div>
                     <div className="square" data-square="7">{this.state.board[6]}</div>
                     <div className="square" data-square="8">{this.state.board[7]}</div>
-                    <div className="square" data-square="9">{this.state.board[9]}</div>
+                    <div className="square" data-square="9">{this.state.board[8]}</div>
                 </div>
             </div>
         );
