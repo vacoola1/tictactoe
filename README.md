@@ -1,12 +1,14 @@
 # Tic Tac Toe Game
 
+## Installing
+    change database url in application.yml
+    run resources/db/scripts/create-db.sql
 ### Back-end start:
     ./gradlew bootRun
 
 ### Front-end start:
     cd webapp
-    npm install
-    npm start
+    npm install & npm start
  
 ### BE
  * Java 10

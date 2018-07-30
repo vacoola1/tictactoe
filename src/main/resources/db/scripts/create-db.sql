@@ -1,10 +1,3 @@
--- DROP DATABASE IF EXISTS tictactoe;
---
--- CREATE DATABASE tictactoe;
-
--- DROP DATABASE IF EXISTS tictactoe_test;
--- CREATE DATABASE tictactoe_test;
-
 CREATE TABLE IF NOT EXISTS GAME (
   ID        INTEGER NOT NULL AUTO_INCREMENT,
   NAME      VARCHAR(50),
