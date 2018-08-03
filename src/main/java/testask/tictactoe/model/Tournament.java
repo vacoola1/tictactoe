@@ -3,7 +3,7 @@ package testask.tictactoe.model;
 import lombok.Data;
 
 @Data
-public class Turnament {
+public class Tournament {
     private Integer id;
     private String name;
 }

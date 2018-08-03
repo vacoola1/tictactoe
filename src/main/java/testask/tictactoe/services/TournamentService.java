@@ -1,10 +1,10 @@
 package testask.tictactoe.services;
 
-import testask.tictactoe.model.Turnament;
+import testask.tictactoe.model.Tournament;
 
 import java.util.List;
 
 public interface TournamentService {
 
-    List<Turnament> getUserTurnaments(String userId);
+    List<Tournament> getUserTournaments(Integer userId);
 }
